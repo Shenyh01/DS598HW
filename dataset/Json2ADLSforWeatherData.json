@@ -1,0 +1,25 @@
+{
+	"name": "Json2ADLSforWeatherData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"start": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "weatherdata_@{dataset().start}.json",
+				"folderPath": "weatherdata",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {}
+	}
+}
