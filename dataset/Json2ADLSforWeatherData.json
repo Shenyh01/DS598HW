@@ -15,9 +15,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "weatherdata_@{dataset().start}.json",
-				"folderPath": "weatherdata",
-				"fileSystem": "bronze"
+				"fileName": {
+					"value": "weatherdata_@{dataset().start}.json",
+					"type": "Expression"
+				},
+				"folderPath": "bronze",
+				"fileSystem": "mystorageds598"
 			}
 		},
 		"schema": {}
