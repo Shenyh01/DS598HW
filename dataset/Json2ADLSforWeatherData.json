@@ -15,12 +15,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "weatherdata_@{dataset().start}.json",
-					"type": "Expression"
-				},
-				"folderPath": "bronze",
-				"fileSystem": "mystorageds598"
+				"fileName": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json",
+				"folderPath": "bronze/weatherdata",
+				"fileSystem": "containerhw1"
 			}
 		},
 		"schema": {}
