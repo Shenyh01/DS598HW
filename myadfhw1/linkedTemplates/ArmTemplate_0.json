@@ -166,22 +166,14 @@
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"start": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "weatherdata_@{dataset().start}.json",
-							"type": "Expression"
-						},
-						"folderPath": "bronze",
-						"fileSystem": "mystorageds598"
+						"fileName": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json",
+						"folderPath": "bronze/weatherdata",
+						"fileSystem": "containerhw1"
 					}
 				},
 				"schema": {}
@@ -295,9 +287,7 @@
 										{
 											"referenceName": "Json2ADLSforWeatherData",
 											"type": "DatasetReference",
-											"parameters": {
-												"start": "weatherdata_@{item().start}.json"
-											}
+											"parameters": {}
 										}
 									]
 								}
