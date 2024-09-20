@@ -197,7 +197,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Web1",
+						"name": "GetAPIKey",
 						"type": "WebActivity",
 						"dependsOn": [],
 						"policy": {
@@ -223,7 +223,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Web1",
+								"activity": "GetAPIKey",
 								"dependencyConditions": [
 									"Succeeded"
 								]
