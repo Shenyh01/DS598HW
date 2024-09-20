@@ -1,0 +1,25 @@
+{
+	"name": "Json4ADLSforAirPollutionData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "@{dataset().fileName}",
+				"folderPath": "bronze/airpollution",
+				"fileSystem": "containerhw1"
+			}
+		},
+		"schema": {}
+	}
+}
