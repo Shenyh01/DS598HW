@@ -99,10 +99,7 @@
 							"outputs": [
 								{
 									"referenceName": "Json2ADLSforWeatherData",
-									"type": "DatasetReference",
-									"parameters": {
-										"start": "weatherdata_@{item().start}.json"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
