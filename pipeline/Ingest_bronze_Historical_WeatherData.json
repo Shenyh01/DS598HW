@@ -99,7 +99,10 @@
 							"outputs": [
 								{
 									"referenceName": "Json2ADLSforWeatherData",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json"
+									}
 								}
 							]
 						}
