@@ -343,7 +343,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "HttpServerLocation",
-						"relativeUrl": "data/2.5/air_pollution/city?lat=@{dataset().lat}&lon=@{dataset().lon}&start=@{dataset().start}&end=@{dataset().end}&appid=@{dataset().appid}"
+						"relativeUrl": {
+							"value": "data/2.5/air_pollution/history?lat=@{dataset().lat}&lon=@{dataset().lon}&start=@{dataset().start}&end=@{dataset().end}&appid=@{dataset().appid}",
+							"type": "Expression"
+						}
 					}
 				},
 				"schema": {}
@@ -481,7 +484,10 @@
 											"referenceName": "Json4ADLSforAirPollutionData",
 											"type": "DatasetReference",
 											"parameters": {
-												"filename": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json"
+												"filename": {
+													"value": "airpollutiondata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json",
+													"type": "Expression"
+												}
 											}
 										}
 									]
