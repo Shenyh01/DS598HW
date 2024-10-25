@@ -7,8 +7,7 @@
 		},
 		"parameters": {
 			"filename": {
-				"type": "string",
-				"defaultValue": "weatherdata_1695388464.json"
+				"type": "string"
 			}
 		},
 		"annotations": [],
