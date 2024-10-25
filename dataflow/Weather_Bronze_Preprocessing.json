@@ -1,0 +1,26 @@
+{
+	"name": "Weather_Bronze_Preprocessing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json2ADLSforWeatherData",
+						"type": "DatasetReference"
+					},
+					"name": "weathersource"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine',",
+				"     wildcardPaths:['containerhw1/bronze/weatherdata/*.json']) ~> weathersource"
+			]
+		}
+	}
+}
