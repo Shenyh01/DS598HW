@@ -15,7 +15,11 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "flatten1"
+					"name": "flatten1",
+					"description": "Unrolling arrays from  to  with columns "
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -39,10 +43,25 @@
 				"          city_id,",
 				"          calctime,",
 				"          cnt,",
-				"          list",
+				"          timestamp = list.dt,",
+				"          clouds_all = list.clouds.all,",
+				"          feels_like = list.main.feels_like,",
+				"          humidity = list.main.humidity,",
+				"          pressure = list.main.pressure,",
+				"          temp = list.main.temp,",
+				"          temp_max = list.main.temp_max,",
+				"          temp_min = list.main.temp_min,",
+				"          description = list.weather.description,",
+				"          icon = list.weather.icon,",
+				"          id = list.weather.id,",
+				"          main = list.weather.main,",
+				"          deg = list.wind.deg,",
+				"          speed = list.wind.speed",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1"
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 derive(correcred_timestamp = iif(length(toString(timestamp)) == 10, timestamp, null())\r",
+				") ~> derivedColumn1"
 			]
 		}
 	}
