@@ -1,0 +1,30 @@
+{
+	"name": "airpollution_Nronze_Preprocessing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json4ADLSforAirPollutionData",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          coord as (lon as double, lat as double),",
+				"          list as (main as (aqi as integer), components as (co as double, no as double, no2 as double, o3 as double, so2 as double, pm2_5 as double, pm10 as double, nh3 as double), dt as integer)[]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine',",
+				"     wildcardPaths:['containerhw1/bronze/bronze_air_pollution_data']) ~> source1"
+			]
+		}
+	}
+}
