@@ -12,7 +12,11 @@
 					"name": "weathersource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "flatten1",
@@ -26,6 +30,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +90,40 @@
 				"          lat = 42.3601,",
 				"          weather_main_value = split(weather_main, ': ')[1],",
 				"          weather_description_value = split(weather_description, ': ')[1],",
-				"          weather_icon_value = split(weather_icon, ': ')[1]) ~> derivedColumn2"
+				"          weather_icon_value = split(weather_icon, ': ')[1]) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          clouds_all,",
+				"          feels_like_K = feels_like,",
+				"          humidity,",
+				"          pressure,",
+				"          {temp——} = temp,",
+				"          temp_max_K = temp_max,",
+				"          temp_min_K = temp_min,",
+				"          wind_deg,",
+				"          wind_speed,",
+				"          corrected_timestamp,",
+				"          location,",
+				"          data_time,",
+				"          id,",
+				"          temp_c,",
+				"          feels_like_C,",
+				"          temp_min_C,",
+				"          temp_max_C,",
+				"          feels_like_F,",
+				"          temp_min_F,",
+				"          temp_max_F,",
+				"          lon,",
+				"          lat,",
+				"          weather_main_value,",
+				"          weather_description_value,",
+				"          weather_icon_value",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
