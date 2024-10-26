@@ -20,6 +20,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -60,8 +63,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 derive(correcred_timestamp = iif(length(toString(timestamp)) == 10, timestamp, null())\r",
-				") ~> derivedColumn1"
+				"flatten1 derive(corrected_timestamp = iif(length(toString(timestamp)) == 10, timestamp, null()),",
+				"          location = \"Boston\") ~> derivedColumn1",
+				"derivedColumn1 filter(!isNull(corrected_timestamp) && !isNull(temp) && !isNull(humidity)",
+				") ~> filter1"
 			]
 		}
 	}
