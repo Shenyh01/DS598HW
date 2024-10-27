@@ -167,7 +167,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"filename": {
+					"fileName": {
 						"type": "string"
 					}
 				},
@@ -405,6 +405,122 @@
 									},
 									"dt": {
 										"type": "integer"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "bronze/weatherdata",
+						"fileSystem": "containerhw1"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"message": {
+							"type": "string"
+						},
+						"cod": {
+							"type": "string"
+						},
+						"city_id": {
+							"type": "integer"
+						},
+						"calctime": {
+							"type": "number"
+						},
+						"cnt": {
+							"type": "integer"
+						},
+						"list": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"dt": {
+										"type": "integer"
+									},
+									"main": {
+										"type": "object",
+										"properties": {
+											"temp": {
+												"type": "number"
+											},
+											"feels_like": {
+												"type": "number"
+											},
+											"pressure": {
+												"type": "integer"
+											},
+											"humidity": {
+												"type": "integer"
+											},
+											"temp_min": {
+												"type": "number"
+											},
+											"temp_max": {
+												"type": "number"
+											}
+										}
+									},
+									"wind": {
+										"type": "object",
+										"properties": {
+											"speed": {
+												"type": "number"
+											},
+											"deg": {
+												"type": "integer"
+											}
+										}
+									},
+									"clouds": {
+										"type": "object",
+										"properties": {
+											"all": {
+												"type": "integer"
+											}
+										}
+									},
+									"weather": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"main": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"icon": {
+													"type": "string"
+												}
+											}
+										}
 									}
 								}
 							}
@@ -691,7 +807,7 @@
 											"referenceName": "Json2ADLSforWeatherData",
 											"type": "DatasetReference",
 											"parameters": {
-												"filename": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json"
+												"fileName": "weatherdata_@{div(sub(ticks(addDays(utcNow(), mul(-7, item()))), ticks('1970-01-01T00:00:00Z')), 10000000)}.json"
 											}
 										}
 									]
@@ -720,7 +836,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Json2ADLSforWeatherData",
+								"referenceName": "Json5",
 								"type": "DatasetReference"
 							},
 							"name": "weathersource"
@@ -851,7 +967,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Json2ADLSforWeatherData')]",
+				"[concat(variables('factoryId'), '/datasets/Json5')]",
 				"[concat(variables('factoryId'), '/datasets/Parquet1weatherdata')]"
 			]
 		},
@@ -976,54 +1092,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/bronze2silver_weatherdata')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Weather_Bronze_Preprocessing",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"weathersource": {
-										"filename": "@{dataset().fileName}"
-									},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Weather_Bronze_Preprocessing')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/bronze2silver_airpollution')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1067,6 +1135,52 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/airpollution_Bronze_Preprocessing')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/bronze2silver_weatherdata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Weather_Bronze_Preprocessing",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"weathersource": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Weather_Bronze_Preprocessing')]"
 			]
 		}
 	]
