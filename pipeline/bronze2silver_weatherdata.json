@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "Weather_Bronze_Preprocessing",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"weathersource": {
-								"filename": "@{dataset().fileName}"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
