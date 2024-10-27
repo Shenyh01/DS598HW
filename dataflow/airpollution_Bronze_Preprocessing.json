@@ -1,5 +1,5 @@
 {
-	"name": "airpollution_Nronze_Preprocessing",
+	"name": "airpollution_Bronze_Preprocessing",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
