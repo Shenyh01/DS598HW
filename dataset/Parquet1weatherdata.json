@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "silver_weather_data.parquet",
 				"folderPath": "silver",
 				"fileSystem": "containerhw1"
 			},
