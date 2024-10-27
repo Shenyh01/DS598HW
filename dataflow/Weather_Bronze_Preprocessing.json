@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Json2ADLSforWeatherData",
+						"referenceName": "Json5",
 						"type": "DatasetReference"
 					},
 					"name": "weathersource"
