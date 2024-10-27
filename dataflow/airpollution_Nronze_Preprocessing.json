@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "flatten1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          coord as (lon as double, lat as double),",
@@ -23,7 +27,16 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",
-				"     wildcardPaths:['containerhw1/bronze/bronze_air_pollution_data']) ~> source1"
+				"     wildcardPaths:['containerhw1/bronze/bronze_air_pollution_data']) ~> source1",
+				"source1 foldDown(unroll(),",
+				"     mapColumn(",
+				"          lon = coord.lon,",
+				"          lat = coord.lat,",
+				"          aqi = list.main.aqi,",
+				"          dt = list.dt",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}
