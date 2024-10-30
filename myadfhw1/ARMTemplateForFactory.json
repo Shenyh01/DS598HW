@@ -973,7 +973,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     documentForm: 'documentPerLine',",
-						"     wildcardPaths:['containerhw1/bronze/weatherdata/*.json']) ~> weathersource",
+						"     wildcardPaths:['bronze/weatherdata/*.json']) ~> weathersource",
 						"flatten2 derive(corrected_timestamp = iif(length(toString(timestamp)) == 10, toInteger(timestamp), toInteger(null())),",
 						"          location = \"Boston\") ~> derivedColumn1",
 						"derivedColumn1 filter(!isNull(corrected_timestamp) && !isNull(temp) && !isNull(humidity)) ~> filter1",
