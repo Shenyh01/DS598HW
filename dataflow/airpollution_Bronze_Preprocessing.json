@@ -48,7 +48,7 @@
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",
 				"     wildcardPaths:['bronze/bronze_air_pollution_data']) ~> source1",
-				"flatten2 derive(corrected_timestamp = iif(length(toString({list.dt})) == 10, toInteger({list.dt}), toInteger(null())),",
+				"flatten2 derive(corrected_timestamp = iif(length(toString({timestamp})) == 10, toInteger({timestamp}), toInteger(null())),",
 				"          location = \"Boston\") ~> derivedColumn1",
 				"derivedColumn1 filter(!isNull(corrected_timestamp) && !isNull({list.main.aqi})) ~> filter1",
 				"filter1 derive(corrected_timestamp = toTimestamp(toLong(corrected_timestamp) * 1000),",
